@@ -102,13 +102,13 @@ func (a access) authpost(path, payload string) error {
 	resp, fetchError := http.Post(a.URL+path, "application/json", buf)
 	if fetchError != nil {
 		err := fmt.Errorf("Failed request: %s%s ", a.URL, path)
-		_ = err
 		return err
 	}
 	defer resp.Body.Close()
 
 	body, _ := ioutil.ReadAll(resp.Body)
 	a.parse(body)
+
 	if resp.Status != "200 OK" {
 		err := fmt.Errorf("Failed request: %v: %s%s ", resp.Status, a.URL, path)
 		return err
