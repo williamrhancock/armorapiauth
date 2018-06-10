@@ -5,10 +5,10 @@ This package is a canned Armor Secure Hosting API authorization key generator.  
 # Requirements
 None, it's totally native.
 
-I would encourage you to instrument your own way of securely getting your creds.  I'm simply grabbing them via os.Getenv(VAR) as a fall back but you can pass them to `func GenBearer(string, string) string` if you want everyone's shop will have their own way of storage and retreval of secure creds.
+I would encourage you to instrument your own way of securely getting your creds.  I'm simply grabbing them via os.Getenv(VAR) as a fall back but you can pass them to `func GenBearer(string, string) string` if you want. Everyone's shop will have their own way of storage and retreval of secure creds that will be best for them.
 
 # Example
-For this example you need your account number for context, it can be found on the amp portal under "Account"->"Overview".
+For this example you need your account number for context, it can be found on the amp portal (G4) under "Account"->"Overview".
 
 ```
 package main
@@ -24,7 +24,7 @@ import (
 
 var account = "YourArmorCompanyNumber-4 digits"
 var user = "username"
-var pass "password"
+var pass = "password"
 
 func main() {
 	client := &http.Client{}
