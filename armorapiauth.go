@@ -8,17 +8,13 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
 )
 
 var (
-	username    = os.Getenv("MasterUser")
-	password    = os.Getenv("ArmorPass")
-	accept      = "application/json"
-	fetchError  = false
-	code        string
-	accessToken string
-	idToken     string
+	username   = os.Getenv("MasterUser")
+	password   = os.Getenv("ArmorPass")
+	accept     = "application/json"
+	fetchError = false
 )
 
 type access struct {
@@ -28,7 +24,6 @@ type access struct {
 	code        string
 	accessToken string
 	idToken     string
-	laststatus  string
 }
 type authentication struct {
 	Code        string `json:"code,omitempty"`
@@ -44,12 +39,12 @@ type token struct {
 
 var auth authentication
 var toke token
-
 var a access
 
-func armorapiauth() string {
+// GenBearer is the only exported function: BearerToken:= GenBearer()
+func GenBearer() string {
 	if len(username) == 0 {
-		a.print("You must declare an evn variable for ArmorPass, and MasterPass")
+		a.die("You must declare an evn variable for ArmorPass, and MasterPass")
 	}
 
 	fetchError = false
@@ -64,8 +59,7 @@ func armorapiauth() string {
 		"username": "`+username+`",
 		"password": "`+password+`"
 	  }`); ok != nil {
-		a.print(ok)
-		os.Exit(99)
+		a.die(ok)
 	} else {
 		a.code = auth.Code
 	}
@@ -75,20 +69,16 @@ func armorapiauth() string {
 		"code":"`+auth.Code+`",
 		"grant_type":"authorization_code"
 	  }`); ok != nil {
-		a.print(ok)
-		os.Exit(99)
+		a.die(ok)
 	} else {
 		a.accessToken = toke.AccessToken
 		a.idToken = toke.IDToken
 	}
 
-	//log.Print("Successful authentication.")
-	// Use to check the access struct for full data
-	//fmt.Printf("%#v\n", a)
 	return "FH-AUTH " + toke.IDToken
 }
 
-func (a access) print(p ...interface{}) {
+func (a access) die(p ...interface{}) {
 	for _, v := range p {
 		log.Printf("%#v\n", v)
 	}
@@ -104,8 +94,8 @@ func (a access) authpost(path, payload string) error {
 		err := fmt.Errorf("Failed request: %s%s ", a.URL, path)
 		return err
 	}
-	defer resp.Body.Close()
 
+	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 	a.parse(body)
 
@@ -113,11 +103,11 @@ func (a access) authpost(path, payload string) error {
 		err := fmt.Errorf("Failed request: %v: %s%s ", resp.Status, a.URL, path)
 		return err
 	}
+
 	return nil
 }
 
 func (a access) parse(s []byte) {
-
 	if err := json.Unmarshal(s, &auth); err != nil {
 		log.Fatal(err)
 	}
@@ -125,8 +115,3 @@ func (a access) parse(s []byte) {
 		log.Fatal(err)
 	}
 }
-
-func graceful() { fmt.Println(time.Now(), "End"); os.Exit(0) }
-
-func reuse() {}
-func new()   {}
