@@ -75,15 +75,7 @@ func GenBearer() string {
 		a.idToken = toke.IDToken
 	}
 
-	return "FH-AUTH " + toke.IDToken
-}
-
-func (a access) die(p ...interface{}) {
-	for _, v := range p {
-		log.Printf("%#v\n", v)
-	}
-	log.Printf("%#v\n", a)
-	log.Fatal("Ungraceful death.")
+	return "FH-AUTH " + toke.AccessToken
 }
 
 func (a access) authpost(path, payload string) error {
@@ -114,4 +106,12 @@ func (a access) parse(s []byte) {
 	if err := json.Unmarshal(s, &toke); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func (a access) die(p ...interface{}) {
+	for _, v := range p {
+		log.Printf("%#v\n", v)
+	}
+	log.Printf("%#v\n", a)
+	log.Fatal("Ungraceful death.")
 }
