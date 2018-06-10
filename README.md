@@ -47,7 +47,7 @@ func main() {
 }
 ```
 
-This is effectly return all users in the contect of the company, the struct in this case looks like this.
+This is effectly return all users in the context of the company, the struct in this case looks like this.
 
 
 ```
