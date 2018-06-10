@@ -3,11 +3,9 @@
 This package is a canned Armor Secure Hosting API authorization key generator.  It simply returns "FH-AUTH $bearer_token".
 
 # Requirements
-The only real requirements is to set your user/password in the environment, you can do this at run time via.
+None, it's totally native.
 
-```MasterPass="password" ArmorUser="username" go run *.go (or the upstream go proggy if using this as a library.)```
-
-I would encourage you to instrument your own way of securely getting your creds.  I'm simply grabbing them via os.Env(VAR) as everyone's shop will have their own way of storage and retreval of secure creds.
+I would encourage you to instrument your own way of securely getting your creds.  I'm simply grabbing them via os.Getenv(VAR) as a fall back but you can pass them to `func GenBearer(string, string) string` if you want everyone's shop will have their own way of storage and retreval of secure creds.
 
 # Example
 For this example you need your account number for context, it can be found on the amp portal under "Account"->"Overview".
@@ -25,11 +23,13 @@ import (
 )
 
 var account = "YourArmorCompanyNumber-4 digits"
+var user = "username"
+var pass "password"
 
 func main() {
 	client := &http.Client{}
 
-	token := aromorapiauth.GenBearer()
+	token := aromorapiauth.GenBearer(user, pass)
 
 	request, error := http.NewRequest("GET", "https://api.armor.com/users", nil)
 
