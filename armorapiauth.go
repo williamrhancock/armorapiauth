@@ -41,7 +41,7 @@ var auth authentication
 var toke token
 var a access
 
-// GenBearer is the only exported function: BearerToken:= GenBearer()
+// GenBearer is the only exported function: BearerToken:= GenBearer(string,string) string
 func GenBearer(username, password string) string {
 	if len(username) == 0 {
 		a.die("You must declare an evn variable for ArmorPass, and MasterPass")
