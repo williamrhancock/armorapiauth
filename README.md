@@ -2,6 +2,12 @@
 
 This package is a canned Armor Secure Hosting API authorization key generator.  It simply returns "FH-AUTH $bearer_token".
 
+# How to install
+`go get github.com/williamrhancock/armorapiauth`
+
+# How to update
+`go get -u github.com/williamrhancock/armorapiauth`
+
 # Requirements
 None, it's totally native.
 
