@@ -29,6 +29,10 @@ var pass = "password"
 func main() {
 	client := &http.Client{}
 
+	// This is the only line you need to add to your code
+	// to get all of the access request back and forth out 
+	// of the way.  Once you have it, just pass it to the 
+	// "Authorization" header (2 lines below).
 	token := aromorapiauth.GenBearer(user, pass)
 
 	request, error := http.NewRequest("GET", "https://api.armor.com/users", nil)
@@ -47,7 +51,7 @@ func main() {
 }
 ```
 
-This is effectly return all users in the context of the company, the struct in this case looks like this.
+This returns all users in the context of the company.  Incidentally the struct in this case looks like this.
 
 
 ```
