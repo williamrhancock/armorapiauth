@@ -84,4 +84,4 @@ type Users struct {
 	Status   string `json:"status,omitempty"`
 	Timezone string `json:"timezone,omitempty"`
 	Title    string `json:"title,omitempty"`
-}```
+}```# armorapiauth
